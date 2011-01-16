@@ -1,0 +1,22 @@
+<% title "Images" %>
+<p><%= link_to "New Image", new_image_path %></p>
+
+<table>
+<tr>
+  <td></td>
+  <th>Created At</th>
+  <th>Display At</th>
+</tr>
+  <% for image in @images %>
+    <tr>
+      <td><img width="240" src="<%= image.url %>" alt="" /></td>
+      <td class="index"><%= image.url %><br />
+      <%= image.created_at %></td>
+      <td class="index"><%= image.display_at %></td>
+      <td class="index"><%= link_to "Show", image %></td>
+      <td class="index"><%= link_to "Edit", edit_image_path(image) %></td>
+      <td class="index"><%= link_to "Destroy", image, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
