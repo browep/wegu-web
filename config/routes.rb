@@ -1,5 +1,8 @@
 Wegu::Application.routes.draw do
   resources :images do
+    collection do
+      get :next
+    end
 
   end
 
