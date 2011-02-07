@@ -38,4 +38,17 @@ describe "ImagesAPI" do
     current_image.url.should == "http://imgur.com/third"
   end
 
+
+  it "should return nothing when latest display day is more than a day ago" do
+    current_image = Image.current_image(Time.now + 3.days + 10.seconds)
+    current_image.nil?.should == true
+
+  end
+
+  it "should return something when calling random" do
+    random_image = Image.random
+    random_image.nil?.should == false
+
+  end
+
 end

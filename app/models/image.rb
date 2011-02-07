@@ -1,5 +1,5 @@
 class Image < ActiveRecord::Base
-  attr_accessible :url
+  attr_accessible :url,:display_at
 
   def self.next_display_day
     # find the latest display date
@@ -8,7 +8,8 @@ class Image < ActiveRecord::Base
     if latest.nil? || latest.empty?
       return Time.now
     else
-      latest[0].display_at + 1.days
+      time = latest[0].display_at + 1.days
+      time < Time.now - 1.days ? Time.now : time
     end
   end
 
@@ -21,8 +22,14 @@ class Image < ActiveRecord::Base
   end
 
   def self.current_image(time=Time.now)
-    latest = self.order("display_at DESC").where("display_at <= ?",time).limit(1)
+    latest = self.order("display_at DESC").where("display_at <= ? AND display_at >= ? ",time,time - 1.day).limit(1)
     latest.empty? ? nil : latest[0]
 
+  end
+
+  def self.random
+    random = self.order("RAND()").limit(1)
+    random.empty? ? nil : random[0]
+    
   end
 end

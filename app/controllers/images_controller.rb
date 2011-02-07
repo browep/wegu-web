@@ -44,6 +44,10 @@ class ImagesController < ApplicationController
 
   def next
     @image = Image.current_image
-    render :text => @image.url
+    if(!@image.nil? && @image.display_at > Time.now - 1.days)
+      render :text => @image.url
+    else
+      render :text => Image.random.url
+    end
   end
 end
